@@ -1,12 +1,12 @@
 //
-//  KeyboardManOC.m
+//  KeyboardRobin.m
 //  gzucm_tianjie
 //
 //  Created by jtian on 8/7/15.
 //  Copyright (c) 2015 gzucm_tianjie. All rights reserved.
 //
 
-#import "KeyboardManOC.h"
+#import "KeyboardRobin.h"
 
 @interface KeyboardInfo ()
 
@@ -58,14 +58,14 @@
 
 @end
 
-@interface KeyboardManOC ()
+@interface KeyboardRobin ()
 
 @property (nonatomic, strong) NSNotificationCenter *keyboardObserver;
 @property (nonatomic, strong) KeyboardInfo *keyboardInfo;
 
 @end
 
-@implementation KeyboardManOC
+@implementation KeyboardRobin
 
 - (void)dealloc {
     NSLog(@"%s", __func__);

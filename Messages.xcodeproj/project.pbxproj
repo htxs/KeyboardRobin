@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9B604DE31B759DD90079EF54 /* UIViewController+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B604DE21B759DD90079EF54 /* UIViewController+Private.m */; };
+		9B604DEB1B75CF120079EF54 /* KeyboardRobin.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B604DEA1B75CF120079EF54 /* KeyboardRobin.m */; };
 		9B88142B1B74CB10006F7CEA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B88142A1B74CB10006F7CEA /* main.m */; };
 		9B88142E1B74CB10006F7CEA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B88142D1B74CB10006F7CEA /* AppDelegate.m */; };
 		9B8814311B74CB10006F7CEA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8814301B74CB10006F7CEA /* ViewController.m */; };
@@ -15,7 +16,6 @@
 		9B8814361B74CB10006F7CEA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B8814351B74CB10006F7CEA /* Images.xcassets */; };
 		9B8814391B74CB10006F7CEA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B8814371B74CB10006F7CEA /* LaunchScreen.xib */; };
 		9B8814451B74CB10006F7CEA /* MessagesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8814441B74CB10006F7CEA /* MessagesTests.m */; };
-		9B8814551B74CC7E006F7CEA /* KeyboardManOC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8814541B74CC7E006F7CEA /* KeyboardManOC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +31,8 @@
 /* Begin PBXFileReference section */
 		9B604DE11B759DD90079EF54 /* UIViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Private.h"; sourceTree = "<group>"; };
 		9B604DE21B759DD90079EF54 /* UIViewController+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Private.m"; sourceTree = "<group>"; };
+		9B604DE91B75CF120079EF54 /* KeyboardRobin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardRobin.h; sourceTree = "<group>"; };
+		9B604DEA1B75CF120079EF54 /* KeyboardRobin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardRobin.m; sourceTree = "<group>"; };
 		9B8814251B74CB10006F7CEA /* Messages.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messages.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B8814291B74CB10006F7CEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9B88142A1B74CB10006F7CEA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -44,8 +46,6 @@
 		9B88143E1B74CB10006F7CEA /* MessagesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MessagesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B8814431B74CB10006F7CEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9B8814441B74CB10006F7CEA /* MessagesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessagesTests.m; sourceTree = "<group>"; };
-		9B8814531B74CC7E006F7CEA /* KeyboardManOC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardManOC.h; sourceTree = "<group>"; };
-		9B8814541B74CC7E006F7CEA /* KeyboardManOC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardManOC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,10 +66,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9B604DE81B75CF120079EF54 /* KeyboardRobin */ = {
+			isa = PBXGroup;
+			children = (
+				9B604DE91B75CF120079EF54 /* KeyboardRobin.h */,
+				9B604DEA1B75CF120079EF54 /* KeyboardRobin.m */,
+			);
+			path = KeyboardRobin;
+			sourceTree = "<group>";
+		};
 		9B88141C1B74CB10006F7CEA = {
 			isa = PBXGroup;
 			children = (
-				9B8814521B74CC7E006F7CEA /* KeyboardManOC */,
+				9B604DE81B75CF120079EF54 /* KeyboardRobin */,
 				9B8814271B74CB10006F7CEA /* Messages */,
 				9B8814411B74CB10006F7CEA /* MessagesTests */,
 				9B8814261B74CB10006F7CEA /* Products */,
@@ -126,15 +135,6 @@
 				9B8814431B74CB10006F7CEA /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		9B8814521B74CC7E006F7CEA /* KeyboardManOC */ = {
-			isa = PBXGroup;
-			children = (
-				9B8814531B74CC7E006F7CEA /* KeyboardManOC.h */,
-				9B8814541B74CC7E006F7CEA /* KeyboardManOC.m */,
-			);
-			path = KeyboardManOC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,7 +238,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B8814311B74CB10006F7CEA /* ViewController.m in Sources */,
-				9B8814551B74CC7E006F7CEA /* KeyboardManOC.m in Sources */,
+				9B604DEB1B75CF120079EF54 /* KeyboardRobin.m in Sources */,
 				9B88142E1B74CB10006F7CEA /* AppDelegate.m in Sources */,
 				9B88142B1B74CB10006F7CEA /* main.m in Sources */,
 				9B604DE31B759DD90079EF54 /* UIViewController+Private.m in Sources */,

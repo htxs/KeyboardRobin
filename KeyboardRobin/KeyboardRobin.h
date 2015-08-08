@@ -1,5 +1,5 @@
 //
-//  KeyboardManOC.h
+//  KeyboardRobin.h
 //  gzucm_tianjie
 //
 //  Created by jtian on 8/7/15.
@@ -35,13 +35,13 @@ typedef NS_ENUM(NSUInteger, KeyboardAction) {
 
 @end
 
-@class KeyboardManOC;
+@class KeyboardRobin;
 
 typedef void (^animateWhenKeyboardAppear)(NSInteger appearPostIndex, CGFloat keyboardHeight, CGFloat keyboardHeightIncrement);
 typedef void (^animateWhenKeyboardDisappear)(CGFloat keyboardHeight);
-typedef void (^postKeyboardInfo)(KeyboardManOC *keyboardMan, KeyboardInfo *keyboardInfo);
+typedef void (^postKeyboardInfo)(KeyboardRobin *keyboardRobin, KeyboardInfo *keyboardInfo);
 
-@interface KeyboardManOC : NSObject
+@interface KeyboardRobin : NSObject
 
 @property (nonatomic, assign) BOOL keyboardObserveEnabled;
 @property (nonatomic, assign) NSInteger appearPostIndex;

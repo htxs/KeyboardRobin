@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "KeyboardManOC.h"
+#import "KeyboardRobin.h"
 #import "UIViewController+Private.h"
 
 static NSString *cellID = @"cell";
@@ -19,7 +19,7 @@ static NSString *cellID = @"cell";
 @property (nonatomic, weak) IBOutlet UITextField *textField;
 
 @property (nonatomic, strong) NSMutableArray *messages;
-@property (nonatomic, strong) KeyboardManOC *keyboardMan;
+@property (nonatomic, strong) KeyboardRobin *keyboardRobin;
 @end
 
 @implementation ViewController
@@ -39,10 +39,10 @@ static NSString *cellID = @"cell";
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellID];
     self.tableView.tableFooterView = [[UIView alloc] init];
     
-    self.keyboardMan = [[KeyboardManOC alloc] init];
+    self.keyboardRobin = [[KeyboardRobin alloc] init];
     __weak typeof (self) weak_self = self;
     
-    self.keyboardMan.animateWhenKeyboardAppear = ^(NSInteger appearPostIndex, CGFloat keyboardHeight, CGFloat keyboardHeightIncrement) {
+    self.keyboardRobin.animateWhenKeyboardAppear = ^(NSInteger appearPostIndex, CGFloat keyboardHeight, CGFloat keyboardHeightIncrement) {
         NSLog(@"Keyboard appear: appearPostIndex:%@, keyboardHeight:%@, keyboardHeightIncrement:%@", @(appearPostIndex), @(keyboardHeight), @(keyboardHeightIncrement));
         
         //update tableView's contentOffset
@@ -61,7 +61,7 @@ static NSString *cellID = @"cell";
         [weak_self.view layoutIfNeeded];
     };
     
-    self.keyboardMan.animateWhenKeyboardDisappear = ^(CGFloat keyboardHeight) {
+    self.keyboardRobin.animateWhenKeyboardDisappear = ^(CGFloat keyboardHeight) {
         NSLog(@"Keyboard disappear: keyboardHeight:%@", @(keyboardHeight));
         
         //update tableView's contentOffset
@@ -80,18 +80,18 @@ static NSString *cellID = @"cell";
         [weak_self.view layoutIfNeeded];
     };
     
-//    self.keyboardMan.postKeyboardInfo = ^(KeyboardManOC *keyboardMan, KeyboardInfo *keyboardInfo) {
-//        switch (keyboardInfo.action) {
-//            case KeyboardActionShow:
-//                NSLog(@"Show appearPostIndex:%@, keyboardInfoHeight:%@, keyboardHeightIncrement:%@", @(keyboardMan.appearPostIndex), @(keyboardInfo.height), @(keyboardInfo.heightIncrement));
-//                break;
-//            case KeyboardActionHide:
-//                NSLog(@"Hide keyboardInfoHeight:%@", @(keyboardInfo.height));
-//                break;
-//            default:
-//                break;
-//        }
-//    };
+    self.keyboardRobin.postKeyboardInfo = ^(KeyboardRobin *keyboardRobin, KeyboardInfo *keyboardInfo) {
+        switch (keyboardInfo.action) {
+            case KeyboardActionShow:
+                NSLog(@"Show appearPostIndex:%@, keyboardInfoHeight:%@, keyboardHeightIncrement:%@", @(keyboardRobin.appearPostIndex), @(keyboardInfo.height), @(keyboardInfo.heightIncrement));
+                break;
+            case KeyboardActionHide:
+                NSLog(@"Hide keyboardInfoHeight:%@", @(keyboardInfo.height));
+                break;
+            default:
+                break;
+        }
+    };
 }
 
 - (void)sendMessage:(UITextField *)textField {
