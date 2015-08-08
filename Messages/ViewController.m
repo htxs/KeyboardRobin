@@ -41,47 +41,57 @@ static NSString *cellID = @"cell";
     
     self.keyboardMan = [[KeyboardManOC alloc] init];
     __weak typeof (self) weak_self = self;
+    
     self.keyboardMan.animateWhenKeyboardAppear = ^(NSInteger appearPostIndex, CGFloat keyboardHeight, CGFloat keyboardHeightIncrement) {
         NSLog(@"Keyboard appear: appearPostIndex:%@, keyboardHeight:%@, keyboardHeightIncrement:%@", @(appearPostIndex), @(keyboardHeight), @(keyboardHeightIncrement));
+        
+        //update tableView's contentOffset
         CGPoint tempContentOffset = weak_self.tableView.contentOffset;
         tempContentOffset.y += keyboardHeightIncrement;
         weak_self.tableView.contentOffset = tempContentOffset;
         
+        //update tableView's contentInset
         UIEdgeInsets tempInset = weak_self.tableView.contentInset;
         tempInset.bottom = keyboardHeight + CGRectGetHeight(weak_self.toolBar.frame);
         weak_self.tableView.contentInset = tempInset;
         
+        //update toolBar's bottom constraint relative to superview
         weak_self.toolBarBottomConstraint.constant = keyboardHeight;
         
         [weak_self.view layoutIfNeeded];
     };
+    
     self.keyboardMan.animateWhenKeyboardDisappear = ^(CGFloat keyboardHeight) {
         NSLog(@"Keyboard disappear: keyboardHeight:%@", @(keyboardHeight));
+        
+        //update tableView's contentOffset
         CGPoint tempContentOffset = weak_self.tableView.contentOffset;
         tempContentOffset.y -= keyboardHeight;
         weak_self.tableView.contentOffset = tempContentOffset;
         
+        //update tableView's contentInset
         UIEdgeInsets tempInset = weak_self.tableView.contentInset;
         tempInset.bottom = CGRectGetHeight(weak_self.toolBar.frame);
         weak_self.tableView.contentInset = tempInset;
         
+        //update toolBar's bottom constraint relative to superview
         weak_self.toolBarBottomConstraint.constant = 0;
         
         [weak_self.view layoutIfNeeded];
     };
     
-    self.keyboardMan.postKeyboardInfo = ^(KeyboardManOC *keyboardMan, KeyboardInfo keyboardInfo) {
-        switch (keyboardInfo.action) {
-            case KeyboardActionShow:
-                NSLog(@"Show appearPostIndex:%@, keyboardInfoHeight:%@, keyboardHeightIncrement:%@", @(keyboardMan.appearPostIndex), @(keyboardInfo.frameEnd.size.height), @(keyboardInfo.heightIncrement));
-                break;
-            case KeyboardActionHide:
-                NSLog(@"Hide keyboardInfoHeight:%@", @(keyboardInfo.frameEnd.size.height));
-                break;
-            default:
-                break;
-        }
-    };
+//    self.keyboardMan.postKeyboardInfo = ^(KeyboardManOC *keyboardMan, KeyboardInfo *keyboardInfo) {
+//        switch (keyboardInfo.action) {
+//            case KeyboardActionShow:
+//                NSLog(@"Show appearPostIndex:%@, keyboardInfoHeight:%@, keyboardHeightIncrement:%@", @(keyboardMan.appearPostIndex), @(keyboardInfo.height), @(keyboardInfo.heightIncrement));
+//                break;
+//            case KeyboardActionHide:
+//                NSLog(@"Hide keyboardInfoHeight:%@", @(keyboardInfo.height));
+//                break;
+//            default:
+//                break;
+//        }
+//    };
 }
 
 - (void)sendMessage:(UITextField *)textField {
@@ -89,11 +99,14 @@ static NSString *cellID = @"cell";
     if (text.length == 0) {
         return;
     }
+    
     //update data source
     [self.messages addObject:text];
+    
     // insert new row
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.messages.count - 1 inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    
     // scroll up a little bit if need
     CGFloat newMessageHeight = self.tableView.rowHeight;
     CGFloat blockedHeight = [self pv_statusBarHeight] + [self pv_navigationBarHeight] + CGRectGetHeight(self.toolBar.frame) + self.toolBarBottomConstraint.constant;
@@ -108,6 +121,7 @@ static NSString *cellID = @"cell";
             self.tableView.contentOffset = tempContentOffset;
         }];
     }
+    
     //clear text
     textField.text = @"";
 }

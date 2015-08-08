@@ -10,27 +10,36 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSUInteger, KeyboardAction) {
-    KeyboardActionNotSupport = 99,
     KeyboardActionShow,
     KeyboardActionHide
 };
 
-struct KeyboardInfo {
-    NSTimeInterval animationDuration;
-    NSUInteger animationCurve;
-    CGRect frameBegin;
-    CGRect frameEnd;
-    CGFloat heightIncrement;
-    enum KeyboardAction action;
-    BOOL isSameAction;
-};
-typedef struct KeyboardInfo KeyboardInfo;
+@interface KeyboardInfo : NSObject
+
+@property (nonatomic, assign, readonly) NSTimeInterval animationDuration;
+@property (nonatomic, assign, readonly) NSUInteger animationCurve;
+@property (nonatomic, assign, readonly) CGRect frameBegin;
+@property (nonatomic, assign, readonly) CGRect frameEnd;
+@property (nonatomic, assign, readonly) CGFloat height;
+@property (nonatomic, assign, readonly) CGFloat heightIncrement;
+@property (nonatomic, assign, readonly) KeyboardAction action;
+@property (nonatomic, assign, readonly) BOOL isSameAction;
+
+- (instancetype)initWithAnimationDuration:(NSTimeInterval)duration
+                           animationCurve:(NSUInteger)curve
+                               frameBegin:(CGRect)beginFrame
+                                 frameEnd:(CGRect)endFrame
+                          heightIncrement:(CGFloat)dtHeight
+                                   action:(KeyboardAction)action
+                             isSameAction:(BOOL)isSameAtion;
+
+@end
 
 @class KeyboardManOC;
 
 typedef void (^animateWhenKeyboardAppear)(NSInteger appearPostIndex, CGFloat keyboardHeight, CGFloat keyboardHeightIncrement);
 typedef void (^animateWhenKeyboardDisappear)(CGFloat keyboardHeight);
-typedef void (^postKeyboardInfo)(KeyboardManOC *keyboardMan, KeyboardInfo keyboardInfo);
+typedef void (^postKeyboardInfo)(KeyboardManOC *keyboardMan, KeyboardInfo *keyboardInfo);
 
 @interface KeyboardManOC : NSObject
 

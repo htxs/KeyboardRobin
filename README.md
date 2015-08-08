@@ -1,6 +1,6 @@
 #鸣谢
 
-该项目是改写了 @nixzhu 作者的 [KeybaordMan](https://github.com/nixzhu/KeyboardMan) Swift 版本，特此感谢作者 @nixzhu。因为工作需要在 Objective-c 中实现，所以用 Objective-c 重写了一遍，大家各取所需。
+该项目是改写了 @nixzhu 作者的 [KeybaordMan](https://github.com/nixzhu/KeyboardMan) Swift 版本，特此感谢作者 @nixzhu。因为工作需要在 Objective-C 中实现，所以用 Objective-C 重写了一遍，大家各取所需。
 
 # KeyboardManOC
 

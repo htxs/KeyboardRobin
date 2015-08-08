@@ -8,18 +8,60 @@
 
 #import "KeyboardManOC.h"
 
-//判断KeyboardInfo是否有效；当action == KeyboardActionNotSupport时，无效
-static BOOL KeyboardInfoIsValid (KeyboardInfo keyboardInfo) {
-    if (keyboardInfo.action == KeyboardActionNotSupport) {
-        return NO;
+@interface KeyboardInfo ()
+
+@property (nonatomic, assign) NSTimeInterval animationDuration;
+@property (nonatomic, assign) NSUInteger animationCurve;
+@property (nonatomic, assign) CGRect frameBegin;
+@property (nonatomic, assign) CGRect frameEnd;
+@property (nonatomic, assign) CGFloat heightIncrement;
+@property (nonatomic, assign) KeyboardAction action;
+@property (nonatomic, assign) BOOL isSameAction;
+
+@end
+
+@implementation KeyboardInfo
+
+- (instancetype)initWithAnimationDuration:(NSTimeInterval)duration
+                           animationCurve:(NSUInteger)curve
+                               frameBegin:(CGRect)beginFrame
+                                 frameEnd:(CGRect)endFrame
+                          heightIncrement:(CGFloat)dtHeight
+                                   action:(KeyboardAction)action
+                             isSameAction:(BOOL)isSameAtion {
+    if (self = [super init]) {
+        _animationDuration = duration;
+        _animationCurve = curve;
+        _frameBegin = beginFrame;
+        _frameEnd = endFrame;
+        _heightIncrement = dtHeight;
+        _action = action;
+        _isSameAction = isSameAtion;
     }
-    return YES;
+    return self;
 }
+
+- (instancetype)init {
+    return [self initWithAnimationDuration:0.0f
+                            animationCurve:0
+                                frameBegin:CGRectZero
+                                  frameEnd:CGRectZero
+                           heightIncrement:0
+                                    action:KeyboardActionHide
+                              isSameAction:YES];
+}
+
+#pragma mark - Getter
+- (CGFloat)height {
+    return self.frameEnd.size.height;
+}
+
+@end
 
 @interface KeyboardManOC ()
 
 @property (nonatomic, strong) NSNotificationCenter *keyboardObserver;
-@property (nonatomic) KeyboardInfo keyboardInfo;
+@property (nonatomic, strong) KeyboardInfo *keyboardInfo;
 
 @end
 
@@ -61,11 +103,12 @@ static BOOL KeyboardInfoIsValid (KeyboardInfo keyboardInfo) {
     [_keyboardObserver addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
 }
 
-- (void)setKeyboardInfo:(KeyboardInfo)info {
+- (void)setKeyboardInfo:(KeyboardInfo *)info {
+    _keyboardInfo = info;
     if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
         return;
     }
-    if (KeyboardInfoIsValid(self.keyboardInfo) && (!info.isSameAction || info.heightIncrement != 0)) {
+    if ((!info.isSameAction || info.heightIncrement != 0)) {
         NSTimeInterval duration = info.animationDuration;
         NSUInteger curve = info.animationCurve;
         UIViewAnimationOptions options = curve << 16 | UIViewAnimationOptionBeginFromCurrentState;
@@ -73,13 +116,13 @@ static BOOL KeyboardInfoIsValid (KeyboardInfo keyboardInfo) {
             switch (info.action) {
                 case KeyboardActionShow:
                     if (self.animateWhenKeyboardAppear) {
-                        self.animateWhenKeyboardAppear(self.appearPostIndex, info.frameEnd.size.height, info.heightIncrement);
+                        self.animateWhenKeyboardAppear(self.appearPostIndex, info.height, info.heightIncrement);
                     }
                     self.appearPostIndex++;
                     break;
                 case KeyboardActionHide:
                     if (self.animateWhenKeyboardDisappear) {
-                        self.animateWhenKeyboardDisappear(info.frameEnd.size.height);
+                        self.animateWhenKeyboardDisappear(info.height);
                     }
                     self.appearPostIndex = 0;
                     break;
@@ -99,7 +142,7 @@ static BOOL KeyboardInfoIsValid (KeyboardInfo keyboardInfo) {
 }
 
 - (void)keyboardWillChangeFrame:(NSNotification *)notification {
-    if (KeyboardInfoIsValid(self.keyboardInfo)) {
+    if (self.keyboardInfo) {
         if (self.keyboardInfo.action == KeyboardActionShow) {
             [self handleKeyboard:notification action:KeyboardActionShow];
         }
@@ -114,23 +157,7 @@ static BOOL KeyboardInfoIsValid (KeyboardInfo keyboardInfo) {
 }
 
 - (void)keyboardDidHide:(NSNotification *)notification {
-    NSTimeInterval animationDuration = 0;
-    NSUInteger animationCurve = 0;
-    CGRect frameBegin = CGRectZero;
-    CGRect frameEnd = CGRectZero;
-    CGFloat heightIncrement = 0;
-    KeyboardAction action = KeyboardActionNotSupport;
-    BOOL isSameAction = YES;
-    //OC中的结构体的初始化，存在疑惑
-    self.keyboardInfo = (KeyboardInfo) {
-        animationDuration = animationDuration,
-        animationCurve = animationCurve,
-        frameBegin = frameBegin,
-        frameEnd = frameEnd,
-        heightIncrement = heightIncrement,
-        action = action,
-        isSameAction = isSameAction
-    };
+    self.keyboardInfo = nil;
 }
 
 #pragma mark - Actions
@@ -143,26 +170,23 @@ static BOOL KeyboardInfoIsValid (KeyboardInfo keyboardInfo) {
         CGRect frameEnd = [userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
         
         CGFloat currentHeight = frameEnd.size.height;
-        CGFloat previousHeight = self.keyboardInfo.frameEnd.size.height ?: 0;
+        CGFloat previousHeight = self.keyboardInfo.height ?: 0;
         CGFloat heightIncrement = currentHeight - previousHeight;
         
         BOOL isSameAction;
-        if (self.keyboardInfo.action) {
+        if (self.keyboardInfo) {
             isSameAction = action == self.keyboardInfo.action;
         }
         else {
             isSameAction = NO;
         }
-        //OC中的结构体的初始化，存在疑惑
-        self.keyboardInfo = (KeyboardInfo) {
-            animationDuration = animationDuration,
-            animationCurve = animationCurve,
-            frameBegin = frameBegin,
-            frameEnd = frameEnd,
-            heightIncrement = heightIncrement,
-            action = action,
-            isSameAction = isSameAction
-        };
+        self.keyboardInfo = [[KeyboardInfo alloc] initWithAnimationDuration:animationDuration
+                                                             animationCurve:animationCurve
+                                                                 frameBegin:frameBegin
+                                                                   frameEnd:frameEnd
+                                                            heightIncrement:heightIncrement
+                                                                     action:action
+                                                               isSameAction:isSameAction];
     }
 }
 
