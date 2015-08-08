@@ -108,7 +108,7 @@
     if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
         return;
     }
-    if ((!info.isSameAction || info.heightIncrement != 0)) {
+    if (info && (!info.isSameAction || info.heightIncrement != 0)) {
         NSTimeInterval duration = info.animationDuration;
         NSUInteger curve = info.animationCurve;
         UIViewAnimationOptions options = curve << 16 | UIViewAnimationOptionBeginFromCurrentState;
