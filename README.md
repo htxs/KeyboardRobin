@@ -70,3 +70,7 @@ self.keyboardRobin.postKeyboardInfo = ^(KeyboardRobin *keyboardRobin, KeyboardIn
 Check the demo for more information.
 
 原作者的[中文介绍](https://github.com/nixzhu/dev-blog/blob/master/2015-07-27-keyboard-man.md)。
+
+## License
+
+KeyboardRobin is available under the MIT license. See the LICENSE file for more info.
