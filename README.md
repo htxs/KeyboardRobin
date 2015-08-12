@@ -92,7 +92,7 @@ To integrate KeyboardRobin into your Xcode project using CocoaPods, specify it i
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
 
-pod 'KeyboardRobin', '~> 0.0.1'
+pod 'KeyboardRobin', '~> 0.0.2'
 ```
 
 Then, run the following command:
