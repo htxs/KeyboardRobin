@@ -182,7 +182,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0640;
-				ORGANIZATIONNAME = gzucm_tianjie;
+				ORGANIZATIONNAME = htxs.me;
 				TargetAttributes = {
 					9B8814241B74CB10006F7CEA = {
 						CreatedOnToolsVersion = 6.4;
